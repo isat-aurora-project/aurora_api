@@ -22,7 +22,10 @@ const appHooks = require('./app.hooks')
 const channels = require('./channels')
 const generatorSpecs = require('../feathers-gen-specs.json')
 
-// !code: imports // !end
+const mongoose = require('./mongoose')
+// !code: imports
+const auth0 = require('@morphatic/feathers-auth0')
+// !end
 // !code: init // !end
 
 const app = express(feathers())
@@ -65,11 +68,18 @@ app.use('/', express.static(app.get('public')))
 // Set up Plugins and providers
 // !code: config_start // !end
 app.configure(express.rest(
-  // !code: express_rest // !end
+  // !code: express_rest
+  (req, res, next) => {
+    req.feathers = { ...req.feathers, headers: req.headers }
+    next()
+  }
+  // !end
 ))
 app.configure(socketio(
   // !code: express_socketio // !end
 ))
+// Configure database adapters
+app.configure(mongoose)
 
 // Configure other middleware (see `middleware/index.js`)
 app.configure(middleware)
@@ -77,7 +87,9 @@ app.configure(middleware)
 app.configure(services)
 // Set up event channels (see channels.js)
 app.configure(channels)
-// !code: config_middle // !end
+// !code: config_middle
+app.configure(auth0())
+// !end
 
 // Configure a middleware for 404s and the error handler
 app.use(express.notFound())

@@ -1,25 +1,21 @@
 
-// Application hooks that run for every service. (Can be re-generated.)
+// Hooks for service `users`. (Can be re-generated.)
 const commonHooks = require('feathers-hooks-common')
-// !code: imports
-const log = require('./hooks/log')
-// import the authorize hook
-const { authorize } = require('@morphatic/feathers-auth0-authorize-hook')() // <-- note the parentheses
-// !end
+// !code: imports // !end
 
 // !<DEFAULT> code: used
 // eslint-disable-next-line no-unused-vars
-const { isProvider, unless } = commonHooks
+const { iff } = commonHooks
+// eslint-disable-next-line no-unused-vars
+const { create, update, patch, validateCreate, validateUpdate, validatePatch } = require('./users.validate')
 // !end
+
 // !code: init // !end
 
 let moduleExports = {
   before: {
     // !<DEFAULT> code: before
-    all: [
-      log(),
-      unless(isProvider('server'), authorize)
-    ],
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -31,7 +27,7 @@ let moduleExports = {
 
   after: {
     // !<DEFAULT> code: after
-    all: [ log() ],
+    all: [],
     find: [],
     get: [],
     create: [],
@@ -43,7 +39,7 @@ let moduleExports = {
 
   error: {
     // !<DEFAULT> code: error
-    all: [ log() ],
+    all: [],
     find: [],
     get: [],
     create: [],

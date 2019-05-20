@@ -4,11 +4,24 @@
 // !code: preface // !end
 const logger = require('./logger')
 const app = require('./app')
-// !code: imports // !end
+// !code: imports
+const fs = require('fs')
+const https = require('https')
+// !end
 // !code: init // !end
 
 const port = app.get('port')
-const server = app.listen(port)
+let server
+if (process.env.NODE_ENV !== 'production') {
+  server = https.createServer({
+    key: fs.readFileSync('./api.aurora.test-key.pem', 'utf8'),
+    cert: fs.readFileSync('./api.aurora.test.pem', 'utf8')
+  }, app)
+  server.listen(port)
+  app.setup(server)  // see: https://docs.feathersjs.com/api/express.html#https
+} else {
+  server = app.listen(port)
+}
 // !code: init2 // !end
 
 process.on('unhandledRejection', (reason, p) => {
@@ -19,8 +32,8 @@ process.on('unhandledRejection', (reason, p) => {
 })
 
 server.on('listening', async () => {
-  // !<DEFAULT> code: listening_log
-  logger.info('Feathers application started on http://%s:%d', app.get('host'), port)
+  // !code: listening_log
+  logger.info('Aurora API application started on http://%s:%d', app.get('host'), port)
   // !end
   // !code: listening // !end
   // !code: listening1 // !end
