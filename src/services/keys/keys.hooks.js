@@ -3,9 +3,9 @@
 const commonHooks = require('feathers-hooks-common')
 // !code: imports // !end
 
-// !<DEFAULT> code: used
+// !code: used
 // eslint-disable-next-line no-unused-vars
-const { iff } = commonHooks
+const { disallow } = commonHooks
 // eslint-disable-next-line no-unused-vars
 const { create, update, patch, validateCreate, validateUpdate, validatePatch } = require('./keys.validate')
 // !end
