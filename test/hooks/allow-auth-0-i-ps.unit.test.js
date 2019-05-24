@@ -1,5 +1,6 @@
 
 const assert = require('assert')
+const SKIP = require('@feathersjs/feathers').SKIP
 const allowAuth0IPs = require('../../src/hooks/allow-auth-0-i-ps')
 
 describe('Test /hooks/allow-auth-0-i-ps.unit.test.js', () => {
@@ -50,16 +51,17 @@ describe('Test /hooks/allow-auth-0-i-ps.unit.test.js', () => {
     assert(typeof allowAuth0IPs === 'function', 'Hook is not a function.')
   })
 
-  it('???', () => {
+  it('should SKIP following hooks if IP is on the whitelist', async () => {
     contextBefore.method = 'create'
-    assert(true)
+    contextBefore.params.ip = '138.91.154.99'
+    const res = await allowAuth0IPs()(contextBefore)
+    assert(res === SKIP, 'SKIP was not returned')
+  })
 
-    /*
-    allowAuth0IPs()(contextBefore)
-
-    assert.deepEqual(contextBefore.data, {
-
-    })
-    */
+  it('should **not** SKIP following hooks if IP is not on the whitelist', async () => {
+    contextBefore.method = 'create'
+    contextBefore.params.ip = '138.91.154.100'
+    const res = await allowAuth0IPs()(contextBefore)
+    assert(res === contextBefore, 'SKIP was returned when we should have gotten context')
   })
 })
