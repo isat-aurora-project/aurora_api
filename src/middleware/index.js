@@ -1,5 +1,6 @@
 
 // Configure middleware. (Can be re-generated.)
+const authorize = require('./authorize')
 // !code: imports // !end
 // !code: init // !end
 
@@ -8,7 +9,12 @@ let moduleExports = function (app) {
   // !code: func_init // !end
   // Add your custom middleware here. Remember that
   // in Express, the order matters.
-  // !code: middleware // !end
+  // Your middleware should include:
+  //   app.use(authorize())
+  //   app.use(auth0IpWhitelist())
+  // !<DEFAULT> code: middleware
+  app.use(authorize())
+  // !end
   // !code: func_return // !end
 }
 

@@ -3,11 +3,13 @@
 const commonHooks = require('feathers-hooks-common')
 // !code: imports
 const log = require('./hooks/log')
+// import the skipIfFromAuth0 hook
+const skipIfFromAuth0 = require('./hooks/allow-auth-0-i-ps')
 // import the authorize hook
 const { authorize } = require('@morphatic/feathers-auth0-authorize-hook')() // <-- note the parentheses
 // !end
 
-// !<DEFAULT> code: used
+// !code: used
 // eslint-disable-next-line no-unused-vars
 const { isProvider, unless } = commonHooks
 // !end
@@ -15,10 +17,10 @@ const { isProvider, unless } = commonHooks
 
 let moduleExports = {
   before: {
-    // !<DEFAULT> code: before
+    // !code: before
     all: [
       log(),
-      unless(isProvider('server'), authorize)
+      unless(isProvider('server'), skipIfFromAuth0, authorize)
     ],
     find: [],
     get: [],

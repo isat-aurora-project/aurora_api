@@ -42,12 +42,29 @@
       "graphql": true
     }
   },
-  "hooks": {},
+  "hooks": {
+    "allow-auth-0-i-ps": {
+      "fileName": "allow-auth-0-i-ps",
+      "camelName": "allowAuth0IPs",
+      "ifMulti": "y",
+      "multiServices": [
+        "*none"
+      ],
+      "singleService": ""
+    }
+  },
   "connections": {
     "mongoose": {
       "database": "mongodb",
       "adapter": "mongoose",
       "connectionString": "mongodb://localhost:27017/aurora_api"
+    }
+  },
+  "middlewares": {
+    "authorize": {
+      "path": "*",
+      "camel": "authorize",
+      "kebab": "authorize"
     }
   }
 }

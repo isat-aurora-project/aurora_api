@@ -69,10 +69,10 @@ app.use('/', express.static(app.get('public')))
 // !code: config_start // !end
 app.configure(express.rest(
   // !code: express_rest
-  (req, res, next) => {
-    req.feathers = { ...req.feathers, headers: req.headers }
-    next()
-  }
+  // (req, res, next) => {
+  //   req.feathers = { ...req.feathers, headers: req.headers }
+  //   next()
+  // }
   // !end
 ))
 app.configure(socketio(
