@@ -1,13 +1,8 @@
-
-// Use this hook to manipulate incoming or outgoing data.
-// For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
-
 const SKIP = require('@feathersjs/feathers').SKIP
 
 // eslint-disable-next-line no-unused-vars
 module.exports = function (options = {}) {
 
-  // Return the actual hook.
   return async (context) => {
     // the list of Auth0 IP addresses
     const whitelist = [
@@ -36,10 +31,4 @@ module.exports = function (options = {}) {
     // Best practice: hooks should always return the context.
     return context
   }
-}
-
-// Throw to reject the service call, or on an unrecoverable error.
-// eslint-disable-next-line no-unused-vars
-function error(msg) {
-  throw new Error(msg)
 }
