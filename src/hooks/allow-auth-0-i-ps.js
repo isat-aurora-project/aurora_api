@@ -1,4 +1,5 @@
 const SKIP = require('@feathersjs/feathers').SKIP
+const logger = require('../logger')
 
 // eslint-disable-next-line no-unused-vars
 module.exports = function (options = {}) {
@@ -23,6 +24,7 @@ module.exports = function (options = {}) {
       '34.195.142.251',
       '52.200.94.42'
     ]
+    logger.info(context)
     // if the current IP is on the whitelist...
     if (whitelist.includes(context.params.ip)) {
       // skip the rest of the hooks
