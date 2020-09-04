@@ -47,7 +47,7 @@
     "feathers-memory": "^2.2.0",
     "feathers-mongoose": "^6.3.0",
     "helmet": "^3.18.0",
-    "lodash.merge": "^4.6.1",
+    "lodash.merge": "^4.6.2",
     "mongodb-core": "^3.2.5",
     "mongoose": "^5.5.10",
     "serve-favicon": "^2.5.0",
